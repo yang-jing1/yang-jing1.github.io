@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧生日快乐！ | 芭比公主与女性力量</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffcfe0, #ffb6d0, #ff9ec1, #ff85b1);
+            color: #8a2a5e;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 动态渐变背景 */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #ffcfe0, #ffb6d0, #ff9ec1, #ff85b1, #ff6da2, #ff5593);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .floating-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            opacity: 0.3;
+            animation: floatAround 20s linear infinite;
+        }
+        
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 50px) rotate(90deg); }
+            50% { transform: translate(50px, 100px) rotate(180deg); }
+            75% { transform: translate(-50px, 50px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        /* 音乐控制面板样式 */
+        .music-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            max-width: 250px;
+            width: 100%;
+        }
+        
+        .music-info {
+            font-size: 0.9rem;
+            color: #8a2a5e;
+            text-align: center;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        
+        .music-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .music-control {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffcfe0;
+            color: #ff5593;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .music-control:hover {
+            transform: scale(1.1);
+            background: #ffb6d0;
+        }
+        
+        .music-progress {
+            width: 100%;
+            height: 6px;
+            background: #ffcfe0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .music-progress-bar {
+            height: 100%;
+            background: #ff5593;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        
+        .music-time {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.7rem;
+            color: #8a2a5e;
+        }
+        
+        /* 跳动爱心样式 */
+        .heart-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        
+        .heart {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ff6b6b);
+            position: relative;
+            transform: rotate(-45deg);
+            animation: heartbeat 1.5s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+            filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.7));
+        }
+        
+        .heart:before,
+        .heart:after {
+            content: "";
+            width: 60px;
+            height: 60px;
+            background: inherit;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .heart:before {
+            top: -30px;
+            left: 0;
+        }
+        
+        .heart:after {
+            top: 0;
+            left: 30px;
+        }
+        
+        @keyframes heartbeat {
+            0% {
+                transform: rotate(-45deg) scale(1);
+                background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ff6b6b);
+            }
+            25% {
+                transform: rotate(-45deg) scale(1.1);
+                background: linear-gradient(135deg, #ff8e8e, #ff6b6b, #ff8e8e);
+            }
+            50% {
+                transform: rotate(-45deg) scale(1);
+                background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ff6b6b);
+            }
+            75% {
+                transform: rotate(-45deg) scale(1.1);
+                background: linear-gradient(135deg, #ff8e8e, #ff6b6b, #ff8e8e);
+            }
+            100% {
+                transform: rotate(-45deg) scale(1);
+                background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ff6b6b);
+            }
+        }
+        
+        .heart-text {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0.8;
+        }
+        
+        /* 漂浮爱心样式 */
+        .floating-heart {
+            position: fixed;
+            z-index: 999;
+            pointer-events: none;
+            animation: floatUp 3s ease-in forwards;
+            filter: drop-shadow(0 0 5px rgba(255, 107, 107, 0.7));
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+        
+        /* 颜文字样式 - 修复版 */
+        .kaomoji {
+            position: fixed;
+            font-size: 24px;
+            z-index: 998;
+            cursor: pointer;
+            user-select: none;
+            animation: floatKaomoji 15s linear forwards;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        @keyframes floatKaomoji {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* 女性主义元素样式 */
+        .feminist-section {
+            background: linear-gradient(135deg, #ffb6d0 0%, #ffcfe0 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #ff5593;
+        }
+        
+        .feminist-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #8a2a5e;
+            font-weight: bold;
+        }
+        
+        .feminist-quote {
+            font-size: 1.1rem;
+            color: #b33771;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .feminist-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .feminist-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffcfe0;
+            color: #ff5593;
+            font-size: 1.5rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .feminist-icon:hover {
+            transform: scale(1.1);
+            background: #ffb6d0;
+        }
+        
+        /* 女性主义宣言墙 */
+        .declaration-wall {
+            background: linear-gradient(135deg, #ffb6d0 0%, #ffcfe0 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 200px;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .declaration-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 3px solid #ff5593;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #ff85b1, #ff9ec1, #ffb6d0, #ffcfe0);
+        }
+        
+        h1 {
+            color: #b33771;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .age-badge {
+            background: linear-gradient(135deg, #ff85b1 0%, #ff9ec1 100%);
+            color: white;
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(255, 133, 177, 0.3);
+        }
+        
+        .message {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            padding: 0 10px;
+            line-height: 1.8;
+        }
+        
+        /* 倒计时样式 */
+        .countdown-section {
+            background: linear-gradient(135deg, #ffb6d0 0%, #ffcfe0 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .countdown-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #8a2a5e;
+            font-weight: bold;
+        }
+        
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-unit {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 12px;
+            min-width: 70px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .countdown-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #b33771;
+            margin-bottom: 5px;
+        }
+        
+        .countdown-label {
+            font-size: 0.8rem;
+            color: #8a2a5e;
+            font-weight: 500;
+        }
+        
+        .countdown-message {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            color: #8a2a5e;
+            font-style: italic;
+        }
+        
+        /* 芭比寄语样式 */
+        .barbie-quote-section {
+            background: linear-gradient(135deg, #ffb6d0 0%, #ffcfe0 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #ff85b1;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .barbie-quote-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .barbie-quote-text {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #8a2a5e;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .barbie-quote-zh {
+            font-size: 1.2rem;
+            color: #b33771;
+            font-style: italic;
+            line-height: 1.5;
+        }
+        
+        .barbie-movie {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.8rem;
+            color: #ff5593;
+            font-weight: 500;
+        }
+        
+        .photo-section {
+            margin: 25px 0;
+        }
+        
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff85b1 0%, #ff9ec1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 5px solid #ffcfe0;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .photo-frame:hover {
+            transform: scale(1.05);
+        }
+        
+        #birthdayPhoto {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        
+        .photo-placeholder {
+            color: white;
+            font-size: 1rem;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .upload-btn {
+            background: linear-gradient(135deg, #ff85b1 0%, #ff6da2 100%);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            padding: 12px 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 10px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #ff85b1 0%, #ff6da2 100%);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 15px 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .button:active {
+            transform: translateY(1px);
+        }
+        
+        .interactive-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #ffb6d0;
+        }
+        
+        .section-title {
+            margin-bottom: 15px;
+            color: #b33771;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .gift-icons, .music-controls, .fun-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .gift-icon, .music-btn, .fun-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffcfe0;
+            color: #ff5593;
+            font-size: 1.5rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gift-icon:hover, .music-btn:hover, .fun-btn:hover {
+            transform: scale(1.1);
+            background: #ffb6d0;
+        }
+        
+        .confetti-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            color: white;
+        }
+        
+        .princess-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .princess-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffcfe0;
+            color: #ff5593;
+            font-size: 1.8rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .princess-icon:hover {
+            transform: scale(1.1);
+            background: #ffb6d0;
+        }
+        
+        /* 烟花效果样式 */
+        .firework {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px 2px;
+        }
+        
+        footer {
+            margin-top: 30px;
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .message {
+                font-size: 1.1rem;
+            }
+            
+            .barbie-quote-text {
+                font-size: 1.2rem;
+            }
+            
+            .barbie-quote-zh {
+                font-size: 1rem;
+            }
+            
+            .button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .photo-frame {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .countdown-unit {
+                min-width: 60px;
+                padding: 10px;
+            }
+            
+            .countdown-value {
+                font-size: 1.5rem;
+            }
+            
+            .heart-container {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .heart {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .heart:before,
+            .heart:after {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .heart:before {
+                top: -25px;
+            }
+            
+            .heart:after {
+                left: 25px;
+            }
+            
+            .music-panel {
+                top: 10px;
+                right: 10px;
+                padding: 10px;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="floating-elements" id="floatingElements"></div>
+    
+    <!-- 音乐控制面板 -->
+    <div class="music-panel">
+        <div class="music-info" id="musicInfo">点击下方按钮播放音乐</div>
+        <div class="music-controls">
+            <button class="music-control" id="prevBtn" title="上一首">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="music-control" id="playPauseBtn" title="播放/暂停">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="music-control" id="nextBtn" title="下一首">
+                <i class="fas fa-step-forward"></i>
+            </button>
+        </div>
+        <div class="music-progress">
+            <div class="music-progress-bar" id="progressBar"></div>
+        </div>
+        <div class="music-time">
+            <span id="currentTime">0:00</span>
+            <span id="duration">0:00</span>
+        </div>
+    </div>
+    
+    <!-- 跳动爱心 -->
+    <div class="heart-container" id="heartContainer">
+        <div class="heart-text">点击我!</div>
+        <div class="heart"></div>
+    </div>
+    
+    <div class="container">
+        <h1><i class="fas fa-crown"></i> 智慧，生日快乐！ <i class="fas fa-crown"></i></h1>
+        
+        <div class="age-badge">19岁啦！</div>
+        
+        <p class="message">每个女孩都是公主，今天你是最特别的那一个！</p>
+        
+        <!-- 女性主义宣言墙 -->
+        <div class="declaration-wall" id="declarationWall">
+            <div class="declaration-item">"女孩可以成为任何她想成为的人"</div>
+            <div class="declaration-item">"我的价值不由他人定义"</div>
+            <div class="declaration-item">"女性力量改变世界"</div>
+        </div>
+        
+        <!-- 生日倒计时部分 -->
+        <div class="countdown-section">
+            <div class="countdown-title">🎉 生日倒计时 🎉</div>
+            <div class="countdown-container">
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="countdownDays">0</div>
+                    <div class="countdown-label">天</div>
+                </div>
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="countdownHours">0</div>
+                    <div class="countdown-label">小时</div>
+                </div>
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="countdownMinutes">0</div>
+                    <div class="countdown-label">分钟</div>
+                </div>
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="countdownSeconds">0</div>
+                    <div class="countdown-label">秒</div>
+                </div>
+            </div>
+            <div class="countdown-message" id="countdownMessage">正在计算...</div>
+        </div>
+        
+        <div class="photo-section">
+            <div class="photo-frame" onclick="document.getElementById('photoUpload').click()">
+                <img id="birthdayPhoto" src="" alt="生日照片">
+                <div class="photo-placeholder" id="photoPlaceholder">
+                    点击上传智慧的美照
+                </div>
+            </div>
+            <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+            <button class="upload-btn" onclick="document.getElementById('photoUpload').click()">
+                <i class="fas fa-camera"></i> 上传照片
+            </button>
+        </div>
+        
+        <!-- 芭比公主寄语部分 -->
+        <div class="barbie-quote-section">
+            <p class="barbie-quote-text" id="barbieQuoteEn">Love and imagination can change the world.</p>
+            <p class="barbie-quote-zh" id="barbieQuoteZh">爱和想象力可以改变世界。</p>
+            <div class="barbie-movie" id="barbieMovie">《芭比公主大电影》</div>
+        </div>
+        
+        <div>
+            <button class="button" id="newQuote">换一句寄语</button>
+            <button class="button" id="autoQuote">自动轮播寄语</button>
+        </div>
+        
+        <!-- 女性主义元素部分 -->
+        <div class="feminist-section">
+            <div class="feminist-title">💪 女性力量 💪</div>
+            <div class="feminist-quote" id="feministQuote">"女孩可以成为任何她想成为的人"</div>
+            <div class="feminist-icons">
+                <div class="feminist-icon" onclick="showFeministMessage('力量')">💪</div>
+                <div class="feminist-icon" onclick="showFeministMessage('智慧')">🧠</div>
+                <div class="feminist-icon" onclick="showFeministMessage('勇气')">🦸‍♀️</div>
+                <div class="feminist-icon" onclick="showFeministMessage('独立')">🚀</div>
+                <div class="feminist-icon" onclick="addDeclaration()">➕</div>
+            </div>
+        </div>
+        
+        <div class="interactive-section">
+            <div class="section-title">芭比公主礼物</div>
+            <div class="gift-icons">
+                <div class="gift-icon" onclick="showMessage('送你一束鲜花 💐')">💐</div>
+                <div class="gift-icon" onclick="showMessage('送你一块蛋糕 🎂')">🎂</div>
+                <div class="gift-icon" onclick="showMessage('送你一份礼物 🎁')">🎁</div>
+                <div class="gift-icon" onclick="showMessage('送你一颗爱心 💗')">💗</div>
+                <div class="gift-icon confetti-btn" onclick="createConfetti()">🎉</div>
+                <div class="gift-icon" onclick="createFireworks()">🎆</div>
+            </div>
+            
+            <div class="section-title" style="margin-top: 25px;">公主音乐盒</div>
+            <div class="music-controls">
+                <div class="music-btn" onclick="playTrack(0)"><i class="fas fa-music"></i></div>
+                <div class="music-btn" onclick="playTrack(1)"><i class="fas fa-fist-raised"></i></div>
+                <div class="music-btn" onclick="stopMusic()"><i class="fas fa-stop"></i></div>
+                <div class="music-btn" onclick="toggleBackgroundMusic()"><i class="fas fa-volume-up"></i></div>
+            </div>
+            
+            <div class="section-title" style="margin-top: 25px;">公主趣味互动</div>
+            <div class="fun-buttons">
+                <div class="fun-btn" onclick="createSparkles()">✨</div>
+                <div class="fun-btn" onclick="changeBackground()">🎨</div>
+                <div class="fun-btn" onclick="danceEffect()">💃</div>
+                <div class="fun-btn" onclick="typewriterEffect()">✍️</div>
+                <div class="fun-btn" onclick="createKaomojis()">(´∀｀)♡</div>
+            </div>
+            
+            <div class="section-title" style="margin-top: 25px;">芭比公主角色</div>
+            <div class="princess-icons">
+                <div class="princess-icon" onclick="showPrincessMessage('长发公主')">👑</div>
+                <div class="princess-icon" onclick="showPrincessMessage('天鹅公主')">🦢</div>
+                <div class="princess-icon" onclick="showPrincessMessage('芭蕾公主')">🩰</div>
+                <div class="princess-icon" onclick="showPrincessMessage('美人鱼公主')">🧜‍♀️</div>
+                <div class="princess-icon" onclick="showPrincessMessage('彩虹仙子')">🌈</div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>专为智慧设计的芭比公主与女性力量主题生日祝福 ✨ | 19岁快乐！</p>
+        <p>每个女孩都是公主，今天你是最闪耀的那一个！</p>
+    </footer>
+
+    <!-- 隐藏的音频元素 -->
+    <audio id="localMusic" style="display: none;">
+        <!-- 替换为你的实际音频文件名 -->
+        <source src="birthday-song.mp3" type="audio/mpeg">
+        <source src="feminist-anthem.mp3" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+
+    <script>
+        // 芭比公主寄语库
+        const barbieQuotes = [
+            {
+                en: "Love and imagination can change the world.",
+                zh: "爱和想象力可以改变世界。",
+                movie: "《芭比公主大电影》"
+            },
+            {
+                en: "You're braver than you think.",
+                zh: "你比你想象得还要勇敢。",
+                movie: "《芭比之长发公主》"
+            },
+            {
+                en: "Live your dream",
+                zh: "去实现你的梦想。",
+                movie: "《芭比之天鹅湖》"
+            },
+            {
+                en: "There is a difference only you can make.",
+                zh: "这是只有你才能做出的改变。",
+                movie: "《芭比之真假公主》"
+            },
+            {
+                en: "There may be miracles awaiting. They may be closer than we know. When we have love to guide us as we go.",
+                zh: "也许有奇迹在等待着我们，也许奇迹就在我们身边，爱会带我们找寻它。",
+                movie: "《芭比之十二芭蕾公主》"
+            },
+            {
+                en: "It feels good to be part of something bigger than yourself.",
+                zh: "成为比自己更强大的事物的一部分的感觉更好。",
+                movie: "《芭比之森林公主》"
+            },
+            {
+                en: "There is a princess in every girl.",
+                zh: "每个女孩都是公主。",
+                movie: "《芭比之魅力公主学院》"
+            },
+            {
+                en: "The most beautiful thing you can be is yourself.",
+                zh: "你能成为的最美好的人就是你自己。",
+                movie: "《芭比之蝴蝶仙子》"
+            },
+            {
+                en: "Even the smallest person can make a big difference.",
+                zh: "即使是最微小的人，也能带来巨大的改变。",
+                movie: "《芭比之拇指姑娘》"
+            },
+            {
+                en: "Magic happens when you believe in yourself.",
+                zh: "魔法发生在你相信自己的时候。",
+                movie: "《芭比之时尚奇迹》"
+            }
+        ];
+        
+        // 女性主义名言库
+        const feministQuotes = [
+            "女孩可以成为任何她想成为的人",
+            "我的价值不由他人定义",
+            "女性力量改变世界",
+            "我们不需要完美，我们只需要勇敢",
+            "女性的声音值得被听见",
+            "打破刻板印象，做真实的自己",
+            "你的身体，你的选择",
+            "平等不是特权，而是权利",
+            "团结的女性力量无穷",
+            "教育一个女孩，改变一个世界"
+        ];
+        
+        // 颜文字库 - 扩展版
+        const kaomojis = [
+            "(´∀｀)♡", "(￣▽￣)~*", "(●'◡'●)", "（*´▽｀*）", "（づ￣3￣）づ╭❤～",
+            "☆*:.｡.o(≧▽≦)o.｡.:*☆", "(❤ω❤)", "(☆▽☆)", "ヽ(✿ﾟ▽ﾟ)ノ", "（*＾-＾*）",
+            "（●´∀｀）ノ♡", "(*´▽`*)", "（*´∀｀*)", "（´・ω・｀）", "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧",
+            "（ﾉ´∀｀*）", "(｡◕‿◕｡)", "(◕‿◕✿)", "（*´▽｀*）", "（●ˊωˋ●）",
+            "（＾∀＾●）", "（●´ω｀●）", "（●´∀｀）", "（*´ω｀*）", "（*´▽`*)",
+            "（*´∀｀）", "（*´▽｀*）", "（●´ω｀●）", "（*´▽`*)", "（*´∀｀）"
+        ];
+        
+        // 获取DOM元素
+        const barbieQuoteEn = document.getElementById('barbieQuoteEn');
+        const barbieQuoteZh = document.getElementById('barbieQuoteZh');
+        const barbieMovie = document.getElementById('barbieMovie');
+        const newQuoteBtn = document.getElementById('newQuote');
+        const autoQuoteBtn = document.getElementById('autoQuote');
+        const heartContainer = document.getElementById('heartContainer');
+        const photoUpload = document.getElementById('photoUpload');
+        const birthdayPhoto = document.getElementById('birthdayPhoto');
+        const photoPlaceholder = document.getElementById('photoPlaceholder');
+        const feministQuote = document.getElementById('feministQuote');
+        const declarationWall = document.getElementById('declarationWall');
+        
+        // 倒计时元素
+        const countdownDays = document.getElementById('countdownDays');
+        const countdownHours = document.getElementById('countdownHours');
+        const countdownMinutes = document.getElementById('countdownMinutes');
+        const countdownSeconds = document.getElementById('countdownSeconds');
+        const countdownMessage = document.getElementById('countdownMessage');
+        
+        // 音乐相关元素
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const musicInfo = document.getElementById('musicInfo');
+        const progressBar = document.getElementById('progressBar');
+        const currentTime = document.getElementById('currentTime');
+        const duration = document.getElementById('duration');
+        const localMusic = document.getElementById('localMusic');
+        
+        // 预设音乐文件列表
+        const musicFiles = [
+            { name: "生日歌曲", src: "birthday-song.mp3" },
+            { name: "女性力量歌曲", src: "feminist-anthem.mp3" }
+        ];
+        
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+        let autoPlayInterval;
+        let isAutoPlaying = false;
+        
+        // 初始化浮动元素
+        function initFloatingElements() {
+            const symbols = ['👑', '🌟', '💖', '🎀', '🎂', '🎁', '🎈', '🎉'];
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.top = Math.random() * 100 + 'vh';
+                element.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                element.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                document.getElementById('floatingElements').appendChild(element);
+            }
+        }
+        
+        // 创建多个爱心效果
+        function createHearts() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createFloatingHeart();
+                }, i * 100);
+            }
+        }
+        
+        // 创建漂浮爱心
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '❤️';
+            
+            // 随机大小
+            const size = Math.random() * 30 + 20;
+            heart.style.fontSize = `${size}px`;
+            
+            // 随机起始位置
+            const startX = Math.random() * window.innerWidth;
+            heart.style.left = `${startX}px`;
+            heart.style.bottom = '0';
+            
+            // 随机动画持续时间
+            const duration = Math.random() * 3 + 3;
+            heart.style.animationDuration = `${duration}s`;
+            
+            // 添加到页面
+            document.body.appendChild(heart);
+            
+            // 动画结束后移除元素
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+        
+        // 创建颜文字 - 修复版
+        function createKaomojis() {
+            // 创建新的颜文字
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createFloatingKaomoji();
+                }, i * 200);
+            }
+        }
+        
+        // 创建漂浮颜文字 - 修复版
+        function createFloatingKaomoji() {
+            const kaomoji = document.createElement('div');
+            kaomoji.className = 'kaomoji';
+            kaomoji.textContent = kaomojis[Math.floor(Math.random() * kaomojis.length)];
+            
+            // 随机大小
+            const size = Math.random() * 20 + 20;
+            kaomoji.style.fontSize = `${size}px`;
+            
+            // 随机起始位置
+            const startX = Math.random() * window.innerWidth;
+            kaomoji.style.left = `${startX}px`;
+            kaomoji.style.bottom = '0';
+            
+            // 随机颜色
+            const colors = ['#ff85b1', '#ff5593', '#b33771', '#8a2a5e', '#ff6b6b'];
+            kaomoji.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            // 随机动画持续时间
+            const duration = Math.random() * 5 + 10;
+            kaomoji.style.animationDuration = `${duration}s`;
+            
+            // 添加到页面
+            document.body.appendChild(kaomoji);
+            
+            // 点击消失
+            kaomoji.addEventListener('click', () => {
+                kaomoji.remove();
+            });
+            
+            // 动画结束后移除元素
+            kaomoji.addEventListener('animationend', () => {
+                kaomoji.remove();
+            });
+        }
+        
+        // 生日倒计时功能
+        function updateBirthdayCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            // 设置生日日期为12月3日（注意：月份从0开始，11代表12月）
+            let birthday = new Date(currentYear, 11, 3);
+            
+            // 如果今年生日已经过去，计算明年的生日
+            if (now > birthday) {
+                birthday = new Date(currentYear + 1, 11, 3);
+            }
+            
+            // 计算时间差（毫秒）
+            const diff = birthday - now;
+            
+            // 转换为天、小时、分钟、秒
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            // 更新倒计时显示
+            countdownDays.textContent = days;
+            countdownHours.textContent = hours.toString().padStart(2, '0');
+            countdownMinutes.textContent = minutes.toString().padStart(2, '0');
+            countdownSeconds.textContent = seconds.toString().padStart(2, '0');
+            
+            // 更新倒计时消息
+            updateCountdownMessage(days);
+        }
+        
+        // 更新倒计时消息
+        function updateCountdownMessage(days) {
+            if (days > 30) {
+                countdownMessage.textContent = `还有${days}天，时间还很充裕，好好期待吧！`;
+            } else if (days > 14) {
+                countdownMessage.textContent = `只剩${days}天了，生日越来越近了！`;
+            } else if (days > 7) {
+                countdownMessage.textContent = `只剩${days}天，准备好庆祝了吗？`;
+            } else if (days > 1) {
+                countdownMessage.textContent = `只剩${days}天，马上就要到生日了！`;
+            } else if (days === 1) {
+                countdownMessage.textContent = "明天就是生日了！好激动啊！";
+            } else if (days === 0) {
+                countdownMessage.textContent = "🎉 今天就是生日！生日快乐！🎂";
+                // 如果是生日当天，自动触发庆祝效果
+                createHearts();
+                createSparkles();
+                createKaomojis();
+            } else {
+                countdownMessage.textContent = "生日已经过去啦！但祝福永远不过时！";
+            }
+        }
+        
+        // 随机选择芭比寄语
+        function getRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * barbieQuotes.length);
+            return barbieQuotes[randomIndex];
+        }
+        
+        // 更新芭比寄语
+        function updateQuote() {
+            const quote = getRandomQuote();
+            barbieQuoteEn.textContent = quote.en;
+            barbieQuoteZh.textContent = quote.zh;
+            barbieMovie.textContent = quote.movie;
+            
+            // 添加淡入动画
+            const quoteSection = document.querySelector('.barbie-quote-section');
+            quoteSection.style.opacity = '0';
+            setTimeout(() => {
+                quoteSection.style.transition = 'opacity 0.5s ease';
+                quoteSection.style.opacity = '1';
+            }, 10);
+        }
+        
+        // 随机选择女性主义名言
+        function getRandomFeministQuote() {
+            const randomIndex = Math.floor(Math.random() * feministQuotes.length);
+            return feministQuotes[randomIndex];
+        }
+        
+        // 更新女性主义名言
+        function updateFeministQuote() {
+            feministQuote.textContent = getRandomFeministQuote();
+        }
+        
+        // 自动轮播寄语
+        function toggleAutoQuote() {
+            if (isAutoPlaying) {
+                clearInterval(autoPlayInterval);
+                autoQuoteBtn.textContent = "自动轮播寄语";
+                isAutoPlaying = false;
+            } else {
+                autoPlayInterval = setInterval(updateQuote, 5000);
+                autoQuoteBtn.textContent = "停止轮播";
+                isAutoPlaying = true;
+            }
+        }
+        
+        // 照片上传功能
+        photoUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    birthdayPhoto.src = e.target.result;
+                    birthdayPhoto.style.display = 'block';
+                    photoPlaceholder.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // 加载音乐轨道
+        function loadTrack(index) {
+            if (index >= musicFiles.length) return;
+            
+            const track = musicFiles[index];
+            localMusic.src = track.src;
+            musicInfo.textContent = track.name;
+            
+            // 重置进度条
+            progressBar.style.width = '0%';
+            currentTime.textContent = '0:00';
+            
+            // 当元数据加载完成后更新总时长
+            localMusic.addEventListener('loadedmetadata', function() {
+                duration.textContent = formatTime(localMusic.duration);
+            });
+        }
+        
+        // 播放指定轨道
+        function playTrack(index) {
+            if (index >= musicFiles.length) {
+                alert("没有找到对应的音乐文件！");
+                return;
+            }
+            
+            currentTrackIndex = index;
+            loadTrack(currentTrackIndex);
+            playMusic();
+        }
+        
+        // 播放音乐
+        function playMusic() {
+            localMusic.play().then(() => {
+                isPlaying = true;
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }).catch(error => {
+                console.error("播放失败:", error);
+                alert("无法播放音乐，请确保音乐文件存在且格式正确。");
+            });
+        }
+        
+        // 暂停音乐
+        function pauseMusic() {
+            localMusic.pause();
+            isPlaying = false;
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+        
+        // 切换播放/暂停
+        function togglePlayPause() {
+            if (isPlaying) {
+                pauseMusic();
+            } else {
+                playMusic();
+            }
+        }
+        
+        // 上一首
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + musicFiles.length) % musicFiles.length;
+            loadTrack(currentTrackIndex);
+            if (isPlaying) {
+                playMusic();
+            }
+        }
+        
+        // 下一首
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % musicFiles.length;
+            loadTrack(currentTrackIndex);
+            if (isPlaying) {
+                playMusic();
+            }
+        }
+        
+        // 格式化时间（秒 -> 分:秒）
+        function formatTime(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min}:${sec.toString().padStart(2, '0')}`;
+        }
+        
+        // 更新进度条
+        function updateProgress() {
+            if (localMusic.duration) {
+                const progressPercent = (localMusic.currentTime / localMusic.duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                currentTime.textContent = formatTime(localMusic.currentTime);
+            }
+        }
+        
+        // 显示消息
+        function showMessage(message) {
+            alert(message);
+        }
+        
+        // 显示女性主义消息
+        function showFeministMessage(type) {
+            const messages = {
+                '力量': '你有无限的力量，可以战胜任何挑战！',
+                '智慧': '你的智慧是你最强大的武器！',
+                '勇气': '勇敢做自己，世界因你而不同！',
+                '独立': '独立自主的女性最美丽！'
+            };
+            alert(`女性力量 - ${type}: ${messages[type]}`);
+        }
+        
+        // 显示公主消息
+        function showPrincessMessage(princess) {
+            const messages = {
+                '长发公主': '像长发公主一样勇敢追寻自己的梦想！',
+                '天鹅公主': '像天鹅公主一样优雅美丽！',
+                '芭蕾公主': '像芭蕾公主一样舞动人生！',
+                '美人鱼公主': '像美人鱼公主一样勇敢探索未知！',
+                '彩虹仙子': '像彩虹仙子一样带来快乐和色彩！'
+            };
+            alert(`${princess}: ${messages[princess]}`);
+        }
+        
+        // 添加宣言到宣言墙
+        function addDeclaration() {
+            const newDeclaration = getRandomFeministQuote();
+            const declarationItem = document.createElement('div');
+            declarationItem.className = 'declaration-item';
+            declarationItem.textContent = newDeclaration;
+            declarationWall.appendChild(declarationItem);
+            
+            // 自动滚动到底部
+            declarationWall.scrollTop = declarationWall.scrollHeight;
+        }
+        
+        // 创建彩色纸屑效果
+        function createConfetti() {
+            const colors = ['#ff85b1', '#ff9ec1', '#ffb6d0', '#ffcfe0', '#ff6b6b', '#ff8e8e', '#ffd54f', '#fff176'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animation = `confettiRain ${Math.random() * 3 + 2}s linear forwards`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        // 创建烟花效果
+        function createFireworks() {
+            const colors = ['#ff85b1', '#ff9ec1', '#ff6b6b', '#ffd54f', '#fff176', '#c8e6c9'];
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight / 2;
+                    createFirework(x, y, colors[Math.floor(Math.random() * colors.length)]);
+                }, i * 300);
+            }
+        }
+        
+        function createFirework(x, y, color) {
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.background = color;
+                particle.style.boxShadow = `0 0 10px 2px ${color}`;
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 2 + Math.random() * 2;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                document.body.appendChild(particle);
+                
+                let posX = x;
+                let posY = y;
+                const animate = () => {
+                    posX += vx;
+                    posY += vy;
+                    particle.style.left = posX + 'px';
+                    particle.style.top = posY + 'px';
+                    particle.style.opacity = parseFloat(particle.style.opacity || 1) - 0.02;
+                    
+                    if (parseFloat(particle.style.opacity) > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+                
+                animate();
+            }
+        }
+        
+        // 创建闪光效果
+        function createSparkles() {
+            const symbols = ['✨', '🌟', '⭐', '💫'];
+            for (let i = 0; i < 30; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'floating-heart';
+                sparkle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                // 随机大小
+                const size = Math.random() * 20 + 15;
+                sparkle.style.fontSize = `${size}px`;
+                
+                // 随机起始位置
+                const startX = Math.random() * window.innerWidth;
+                const startY = Math.random() * window.innerHeight;
+                sparkle.style.left = `${startX}px`;
+                sparkle.style.top = `${startY}px`;
+                
+                // 随机动画持续时间
+                const duration = Math.random() * 2 + 1;
+                sparkle.style.animationDuration = `${duration}s`;
+                
+                // 添加到页面
+                document.body.appendChild(sparkle);
+                
+                // 动画结束后移除元素
+                sparkle.addEventListener('animationend', () => {
+                    sparkle.remove();
+                });
+            }
+        }
+        
+        // 更改背景
+        function changeBackground() {
+            const gradients = [
+                'linear-gradient(-45deg, #ffcfe0, #ffb6d0, #ff9ec1, #ff85b1, #ff6da2, #ff5593)',
+                'linear-gradient(-45deg, #ff9ec1, #ff85b1, #ff6da2, #ff5593, #ff3d84, #ff2575)',
+                'linear-gradient(-45deg, #ffb6d0, #ff9ec1, #ff85b1, #ff6da2, #ff5593, #ff3d84)',
+                'linear-gradient(-45deg, #ffcfe0, #ffb6d0, #ff9ec1, #ff5593, #ff3d84, #ff2575)'
+            ];
+            
+            const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+            document.querySelector('.gradient-bg').style.background = randomGradient;
+        }
+        
+        // 跳舞效果
+        function danceEffect() {
+            const elements = document.querySelectorAll('.container, .heart-container');
+            elements.forEach(el => {
+                el.style.transform = 'rotate(5deg)';
+                setTimeout(() => {
+                    el.style.transform = 'rotate(-5deg)';
+                    setTimeout(() => {
+                        el.style.transform = 'rotate(0deg)';
+                    }, 200);
+                }, 200);
+            });
+        }
+        
+        // 打字机效果
+        function typewriterEffect() {
+            const originalTextEn = barbieQuoteEn.textContent;
+            const originalTextZh = barbieQuoteZh.textContent;
+            
+            barbieQuoteEn.textContent = '';
+            barbieQuoteZh.textContent = '';
+            
+            let i = 0;
+            const typing = setInterval(() => {
+                if (i < originalTextEn.length) {
+                    barbieQuoteEn.textContent += originalTextEn.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typing);
+                    
+                    // 开始显示中文
+                    let j = 0;
+                    const typingZh = setInterval(() => {
+                        if (j < originalTextZh.length) {
+                            barbieQuoteZh.textContent += originalTextZh.charAt(j);
+                            j++;
+                        } else {
+                            clearInterval(typingZh);
+                        }
+                    }, 50);
+                }
+            }, 50);
+        }
+        
+        function stopMusic() {
+            pauseMusic();
+            showMessage('音乐已停止');
+        }
+        
+        function toggleBackgroundMusic() {
+            togglePlayPause();
+        }
+        
+        // 事件监听
+        newQuoteBtn.addEventListener('click', updateQuote);
+        autoQuoteBtn.addEventListener('click', toggleAutoQuote);
+        heartContainer.addEventListener('click', createHearts);
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        prevBtn.addEventListener('click', prevTrack);
+        nextBtn.addEventListener('click', nextTrack);
+        
+        // 音频播放进度更新
+        localMusic.addEventListener('timeupdate', updateProgress);
+        
+        // 当音频播放结束时自动播放下一首
+        localMusic.addEventListener('ended', nextTrack);
+        
+        // 初始化
+        initFloatingElements();
+        updateQuote();
+        updateFeministQuote();
+        
+        // 启动倒计时（每秒更新一次）
+        updateBirthdayCountdown();
+        setInterval(updateBirthdayCountdown, 1000);
+        
+        // 初始化颜文字生成（只生成一次）
+        setTimeout(() => {
+            createKaomojis();
+        }, 2000);
+    </script>
+</body>
+</html>
